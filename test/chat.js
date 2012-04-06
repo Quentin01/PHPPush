@@ -11,6 +11,9 @@ window.onload = function() {
 	
 	PHPPush.connect('server.php', 500);
 	PHPPush.launch();
+	
+	// On demande au serveur si on est déjà connecté
+	PHPPush.emit('isAlreadyConnect');
 };
 
 /* Reception d'evenements */
@@ -42,6 +45,11 @@ PHPPush.on('connexion', function(nick) {
 PHPPush.on('deconnexion', function(nick) {
 	addErrorMessage(nick + " vient de se déconnecter !");
 	removeUser(nick);
+});
+
+// On est déjà connecté quand on a chargé la page
+PHPPush.on('alreadyConnect', function() {
+	afficherDeconnexion();
 });
 
 // On a reçu la liste des membres connectés actuellement		
