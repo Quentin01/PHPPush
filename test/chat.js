@@ -9,7 +9,7 @@ var nick = 'Anonyme';
 window.onload = function() {
 	afficherConnexion();
 	
-	PHPPush.connect('server.php', 2000);
+	PHPPush.connect('server.php', 500);
 	PHPPush.launch();
 };
 
