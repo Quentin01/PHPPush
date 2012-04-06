@@ -32,22 +32,25 @@ class ChatServer extends PHPPush {
 	// L'utilisateur essaye de se connecter
 	protected function onConnexion($nick)
 	{
-		$this->getNicks();
-		$this->currentClient->emit('memberList', $this->nicks);
-		
-		if(array_search($nick, $this->nicks) !== false)
+		if(!isset($this->currentClient['nick']))
 		{
-			$this->currentClient->emit('connexionFailed', 'Nick already in use');
-			return;
+			$this->getNicks();
+			
+			if(array_search($nick, $this->nicks) !== false)
+			{
+				$this->currentClient->emit('connexionFailed', 'Nick already in use');
+				return;
+			}
+			
+			$this->nicks[] = $nick;
+			$this->saveNicks();
+			
+			$this->currentClient['nick'] = $nick;
+			
+			$this->currentClient->emit('connexionSucces');
+			$this->broadcast('connexion', $nick);
+			$this->currentClient->emit('memberList', $this->nicks);
 		}
-		
-		$this->nicks[] = $nick;
-		$this->saveNicks();
-		
-		$this->currentClient['nick'] = $nick;
-		
-		$this->currentClient->emit('connexionSucces');
-		$this->broadcast('connexion', $nick);
 	}
 	
 	// L'utilisateur nous envoit un message

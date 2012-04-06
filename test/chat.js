@@ -26,7 +26,6 @@ PHPPush.on('connexionFailed', function(message) {
 // La connexion a réussit
 PHPPush.on('connexionSucces', function() {
 	afficherDeconnexion();
-	addUser(nick);
 	addAgreeMessage("Vous vous êtes bien connecté avec le pseudo " + nick);
 });		
 
@@ -63,11 +62,12 @@ PHPPush.on('memberList', function(users) {
 
 function connexion(nick) {
 	PHPPush.emit('connexion', nick);
+	document.getElementById('users-box').innerHTML = "";
 }
 			
 function deconnexion() {
 	PHPPush.emit('deconnexion');
-	removeUser(nick);
+	document.getElementById('users-box').innerHTML = "";
 }
 			
 function sendMessage(message) {
