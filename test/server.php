@@ -11,6 +11,13 @@ class ChatServer extends PHPPush {
 		if(file_exists('nicks'))
 		{
 			$this->nicks = array_unique(array_merge(unserialize(file_get_contents('nicks')), $this->nicks));
+			
+			$array = array();
+			foreach($this->nicks as $nick)
+			{
+				$array[] = $nick;
+			}
+			$this->nicks = $array;
 		}
 	}
 	
@@ -42,7 +49,7 @@ class ChatServer extends PHPPush {
 				return;
 			}
 			
-			$this->nicks[] = $nick;
+			array_push($this->nicks, $nick);
 			$this->saveNicks();
 			
 			$this->currentClient['nick'] = $nick;
