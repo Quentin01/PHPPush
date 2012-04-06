@@ -32,7 +32,7 @@ class PHPPush {
 				
 				if($this->clients[$file]['lastConnection'] + $time < time())
 				{
-					$this->launchEvent('disconnect', $this->clients[$file]);
+					$this->launchEvent('timeout', $this->clients[$file]);
 					$this->clients[$file]->remove();
 					unset($this->clients[$file]);
 				}

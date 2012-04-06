@@ -82,7 +82,7 @@ class ChatServer extends PHPPush {
 	}
 	
 	// Un utilisateur fait un timeout
-	protected function onDisconnect($client)
+	protected function onTimeout($client)
 	{
 		if(isset($client['nick']))
 		{
