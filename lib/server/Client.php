@@ -30,7 +30,7 @@ class Client implements \ArrayAccess {
 		
 		if($this->offsetExists($name))
 		{
-			return $this->$name;
+			return $this->data[$name];
 		}
 	}
 	
