@@ -66,7 +66,7 @@ class PHPPush {
 		file_put_contents($messagesFile, json_encode($dataEvent));
 	}
 	
-	public function emit($event, $data)
+	public function emit($event, $data = null)
 	{
 		$messagesDir = __DIR__ . '/../pipes/messages/';
 		
@@ -74,7 +74,7 @@ class PHPPush {
 		$this->addEvent($this->currentClient['id'], $event, $data);
 	}
 	
-	public function broadcast($event, $data)
+	public function broadcast($event, $data = null)
 	{
 		$messagesDir = __DIR__ . '/../pipes/messages/';
 		
@@ -84,7 +84,7 @@ class PHPPush {
 		}
 	}
 	
-	protected function launchEvent($event, $data)
+	protected function launchEvent($event, $data = null)
 	{	
 		$methodName = 'on' . ucfirst($event);
 			
