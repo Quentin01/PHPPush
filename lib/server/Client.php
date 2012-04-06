@@ -76,12 +76,12 @@ class Client implements \ArrayAccess {
 		$this->lastRecoveryData = time();
 	}
 	
-	public function emit($event, $data)
+	public function emit($event, $data = null)
 	{
 		$this->server->addEvent($this['id'], $event, $data);
 	}
 	
-	public function broadcast($event, $data)
+	public function broadcast($event, $data = null)
 	{
 		foreach($this->server->getClients() as $client)
 		{
