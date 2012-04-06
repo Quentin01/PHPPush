@@ -28,13 +28,16 @@ class PHPPush {
 		while($file = readdir($dirClients)) {
 			if(substr($file, 0, 1) != '.' && !is_dir($dirClients.$file) && $file != $_SESSION['phppush']['id'])
 			{
-				$this->clients[$file] = new Client($file, $this);
+				$client = new Client($file, $this);
 				
-				if($this->clients[$file]['lastConnection'] + $time < time())
+				if($client['lastConnection'] + $time < time())
 				{
-					$this->launchEvent('timeout', $this->clients[$file]);
-					$this->clients[$file]->remove();
-					unset($this->clients[$file]);
+					$this->launchEvent('timeout', $client);
+					$client->remove();
+				}
+				else
+				{
+					$this->clients[$file] = $client;
 				}
 			}
 		}
@@ -82,7 +85,7 @@ class PHPPush {
 	}
 	
 	protected function launchEvent($event, $data)
-	{
+	{	
 		$methodName = 'on' . ucfirst($event);
 			
 		if(method_exists($this, $methodName))

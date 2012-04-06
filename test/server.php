@@ -101,11 +101,9 @@ class ChatServer extends PHPPush {
 		if(isset($client['nick']))
 		{
 			$this->delNick($client['nick']);
-			$this->broadcast('deconnexion', $client['nick']);
-			
-			unset($client['nick']);
+			$this->emit('deconnexion', $client['nick']);
 		}
 	}
 }
-$server = new ChatServer();
+$server = new ChatServer(20);
 $server->launch();
