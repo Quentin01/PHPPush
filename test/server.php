@@ -105,5 +105,5 @@ class ChatServer extends PHPPush {
 		}
 	}
 }
-$server = new ChatServer(20);
+$server = new ChatServer();
 $server->launch();
