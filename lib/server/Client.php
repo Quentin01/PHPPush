@@ -103,7 +103,7 @@ class Client implements \ArrayAccess {
 		$messagesFile = __DIR__ . '/../pipes/messages/' . $this->id;
 		if(file_exists($messagesFile))
 		{
-			unlink(__DIR__ . '/../pipes/clients/' . $this->id);
+			unlink($messagesFile);
 		}
 	}
 }
