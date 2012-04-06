@@ -84,10 +84,12 @@ class ChatServer extends PHPPush {
 	// L'utilisateur demande si il est connecté
 	protected function onIsAlreadyConnect($data)
 	{
-		$this->getNicks();
-		$this->currentClient->emit('memberList', $this->nicks);
+		if(isset($this->currentClient['nick'])) {
+			$this->getNicks();
+			$this->currentClient->emit('memberList', $this->nicks);
 		
-		$this->currentClient->emit('alreadyConnect');
+			$this->currentClient->emit('alreadyConnect');
+		}
 	}
 	
 	// Un utilisateur fait un timeout
