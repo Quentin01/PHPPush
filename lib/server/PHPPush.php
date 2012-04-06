@@ -8,7 +8,7 @@ class PHPPush {
 	
 	public $currentClient = null;
 	
-	public function __construct() {
+	public function __construct($time = 30) {
 		header('Content-Type : text/plain; charset=UTF-8');
 		
 		if(!isset($_SESSION['phppush']['id']))
@@ -29,6 +29,13 @@ class PHPPush {
 			if(substr($file, 0, 1) != '.' && !is_dir($dirClients.$file) && $file != $_SESSION['phppush']['id'])
 			{
 				$this->clients[$file] = new Client($file, $this);
+				
+				if($this->clients[$file]['lastConnection'] + $time < time())
+				{
+					$this->launchEvent('disconnect', $this->clients[$file]);
+					$this->clients[$file]->remove();
+					unset($this->clients[$file]);
+				}
 			}
 		}
 
@@ -74,6 +81,16 @@ class PHPPush {
 		}
 	}
 	
+	protected function launchEvent($event, $data)
+	{
+		$methodName = 'on' . ucfirst($event);
+			
+		if(method_exists($this, $methodName))
+		{
+			$this->$methodName($data);
+		}
+	}
+	
 	public function launch()
 	{
 		$messagesDir = __DIR__ . '/../pipes/messages/';
@@ -84,12 +101,7 @@ class PHPPush {
 			$event = $_POST['event'];
 			$data = json_decode($_POST['data']);
 			
-			$methodName = 'on' . ucfirst($event);
-			
-			if(method_exists($this, $methodName))
-			{
-				$this->$methodName($data);
-			}
+			$this->launchEvent($event, $data);
 			
 			exit();
 		}

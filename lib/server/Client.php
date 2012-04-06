@@ -92,4 +92,15 @@ class Client implements \ArrayAccess {
 		if($this->server->currentClient['id'] != $this['id'])
 			$this->server->addEvent($this->server->currentClient['id'], $event, $data);
 	}
+	
+	public function remove()
+	{
+		unlink($this->file);
+		
+		$messagesFile = __DIR__ . '/../pipes/messages/' . $this->id;
+		if(file_exists($messagesFile))
+		{
+			unlink(__DIR__ . '/../pipes/clients/' . $this->id);
+		}
+	}
 }
