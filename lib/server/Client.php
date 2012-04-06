@@ -95,7 +95,10 @@ class Client implements \ArrayAccess {
 	
 	public function remove()
 	{
-		unlink($this->file);
+		if(file_exists($this->file))
+		{
+			unlink($this->file);
+		}
 		
 		$messagesFile = __DIR__ . '/../pipes/messages/' . $this->id;
 		if(file_exists($messagesFile))
