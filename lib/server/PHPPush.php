@@ -108,17 +108,15 @@ class PHPPush {
 			
 			exit();
 		}
-		elseif(isset($_POST['get']))
+
+		if(file_exists($messagesFile))
 		{
-			if(file_exists($messagesFile))
-			{
-				echo file_get_contents($messagesFile);
-				unlink($messagesFile);
-			}
-			else
-			{
-				echo json_encode(array());
-			}
+			echo file_get_contents($messagesFile);
+			unlink($messagesFile);
+		}
+		else
+		{
+			echo json_encode(array());
 		}
 	}
 	
