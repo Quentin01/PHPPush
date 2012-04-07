@@ -47,7 +47,8 @@ PHPPush.on('deconnexion', function(nick) {
 });
 
 // On est déjà connecté quand on a chargé la page
-PHPPush.on('alreadyConnect', function() {
+PHPPush.on('alreadyConnect', function(nickname) {
+	nick = nickname;
 	afficherDeconnexion();
 });
 

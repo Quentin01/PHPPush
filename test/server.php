@@ -98,7 +98,7 @@ class ChatServer extends PHPPush {
 			$this->getNicks();
 			$this->currentClient->emit('memberList', $this->nicks);
 		
-			$this->currentClient->emit('alreadyConnect');
+			$this->currentClient->emit('alreadyConnect', $this->currentClient['nick']);
 		}
 	}
 	
