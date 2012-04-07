@@ -105,8 +105,6 @@ class PHPPush {
 			$data = json_decode($_POST['data']);
 			
 			$this->launchEvent($event, $data);
-			
-			exit();
 		}
 
 		if(file_exists($messagesFile))
